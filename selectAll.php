@@ -14,7 +14,6 @@ $connect = connect();
  
 $people = array();
 
-
 $sql = ("SELECT * from person");
 
 if($result = mysqli_query($connect,$sql))
