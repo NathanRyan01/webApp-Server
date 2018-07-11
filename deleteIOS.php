@@ -12,22 +12,25 @@ require_once ("config.php");
  
 //define database object
 global $dbc;
+
+$data = json_decode( file_get_contents("php://input"),true );
  
 $response = array();
 
-$id = isset($_POST['id']) ? $_POST['id'] : '';
-
-$value = isset($_POST['value']) ? $_POST['value'] : '';
-
-$stmt = $dbc->prepare("UPDATE person SET value = '$value' WHERE id = '$id'");
+$stmt = $dbc->prepare("DELETE FROM PERSON");
 $stmt->execute();
-$row = $stmt->rowCount();
+$rowOne = $stmt->rowCount();
 
-if ($row > 0){    
-    $response['message'] = "completed";
-} else{ 
-    $response['message'] = "failed";
+$stmt = $dbc->prepare("DELETE FROM OTHER");
+$stmt->execute();
+$rowTwo = $stmt->rowCount();
+ 
+if (($rowOne != 0) || ($rowTwo != 0)){      
+        $response['message'] = "completed";
+    } else{ 
+        $response['message'] = "failed";
 }
+    
 
 $response = json_encode($response);
 
