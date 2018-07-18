@@ -13,11 +13,9 @@ require_once ("config.php");
 //define database object
 global $dbc;
  
-$response = array();
-
-$id = isset($_POST['id']) ? $_POST['id'] : '';
-
-$value = isset($_POST['value']) ? $_POST['value'] : '';
+$message = "";
+$id =  $_POST['id'];
+$value =  $_POST['value'];
 
 $stmt = $dbc->prepare("UPDATE person SET value = '$value' WHERE id = '$id'");
 $stmt->execute();
